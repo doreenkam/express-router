@@ -66,10 +66,10 @@ router.put('/:id', (req, res) => {
 
 router.delete('/:id', (req, res) => {
   try {
-    const id = req.params.id;
-    if (users[id - 1] > -1) {
-      users.splice(id - 1, 1);
-      res.status(204);
+    const id = req.params.id - 1;
+    if (users[id]) {
+      users.splice(id, 1);
+      res.status(200).send(users);
     } else {
       res.status(404).send("User doesn't exist!");
     }
