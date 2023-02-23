@@ -4,6 +4,9 @@ const port = 5000;
 const usersRoutes = require('./routes/users');
 const fruitsRoutes = require('./routes/fruits');
 
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 app.use('/users', usersRoutes);
 app.use('/fruits', fruitsRoutes);
 
