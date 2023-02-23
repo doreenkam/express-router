@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const { check, validationResult } = require('express-validator');
 
 let users = [
   {
@@ -39,15 +40,25 @@ router.get('/:id', (req, res) => {
   }
 });
 
-router.post('/', (req, res) => {
-  try {
-    const data = req.body;
-    users.push(data);
-    res.status(200).send(users);
-  } catch (error) {
-    res.status(500).send({ error: error.message });
+router.post(
+  '/',
+  check('name', 'Name is required').not().isEmpty().trim(),
+  check('age', 'Age is required').not().isEmpty().trim(),
+  (req, res) => {
+    try {
+      let errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        res.json({ error: errors.array() });
+      } else {
+        const data = req.body;
+        users.push(data);
+        res.status(200).send(users);
+      }
+    } catch (error) {
+      res.status(500).send({ error: error.message });
+    }
   }
-});
+);
 
 router.put('/:id', (req, res) => {
   try {
