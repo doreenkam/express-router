@@ -42,8 +42,10 @@ router.get('/:id', (req, res) => {
 
 router.post(
   '/',
-  check('name', 'Name is required').not().isEmpty().trim(),
-  check('age', 'Age is required').not().isEmpty().trim(),
+  [
+    check('name', 'Name is required').not().isEmpty().trim(),
+    check('age', 'Age is required').not().isEmpty().trim(),
+  ],
   (req, res) => {
     try {
       let errors = validationResult(req);
