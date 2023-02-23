@@ -29,4 +29,14 @@ router.get('/', (req, res) => {
   }
 });
 
+router.get('/:id', (req, res) => {
+  try {
+    const id = req.params.id - 1;
+    const data = users[id];
+    res.status(200).send(data);
+  } catch (error) {
+    res.status(500).send({ error: error.message });
+  }
+});
+
 module.exports = router;
